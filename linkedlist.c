@@ -44,8 +44,7 @@ void *getdata(llist *ll,unsigned int index){
 }
 
 void *removeitem(llist *ll,unsigned int index){
-    if(ll==NULL)return NULL;
-    if(ll->size<=index)return NULL;
+    if(ll==NULL||ll->size<=index)return NULL;
 
     item *itemtodelete=getitem(ll,index);
 
@@ -54,13 +53,16 @@ void *removeitem(llist *ll,unsigned int index){
 
     itemtodelete->nextpoint=NULL;
     itemtodelete->prevpoint=NULL;
+
     void *data=itemtodelete->data;
+
     itemtodelete->data=NULL;
+
     if(nextitem==NULL&&previtem==NULL){
         free(itemtodelete);
         ll->size=0;
         free(ll);
-        ll=NULL;
+        //todo to deletell=NULL;
         return NULL;
     }else if(nextitem==NULL){
         ll->lastpointer=previtem;
@@ -78,9 +80,11 @@ void *removeitem(llist *ll,unsigned int index){
 }
 
 void *deletelist(llist *ll){
-    void *tmp=removeitem(ll,0);
-    while(tmp!=NULL){
-        tmp=removeitem(ll,0);
+    if(ll==NULL)return NULL;
+    unsigned int size=ll->size;
+    while(size<=0){
+        removeitem(ll,0);
+        size--;
     }
     return NULL;
 }
