@@ -82,7 +82,7 @@ void *removeitem(llist *ll,unsigned int index){
 void *deletelist(llist *ll){
     if(ll==NULL)return NULL;
     unsigned int size=ll->size;
-    while(size<=0){
+    while(size>=0){
         removeitem(ll,0);
         size--;
     }
